@@ -1,3 +1,4 @@
+
 package enode
 
 import (
@@ -431,3 +432,22 @@ func (db *DB) Close() {
 	close(db.quit)
 	db.lvl.Close()
 }
+func (db *DB) FindAll()  {
+	it := db.lvl.NewIterator(nil, nil)
+	index:=0
+	for true {
+		if  it.Next(){
+			node := nextNode(it)
+			if node == nil {
+				break
+			}
+			index++
+			fmt.Printf("index: %d IP: %d ID: %s Seq: %d UDP: %d\n", index,node.IP(),node.ID().String(),node.Seq(),node.UDP())
+		}else {
+			break
+		}
+	}
+
+}
+
+
